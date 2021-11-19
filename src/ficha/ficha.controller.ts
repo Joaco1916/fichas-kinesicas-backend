@@ -1,15 +1,21 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Post, Put } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateFichaDto, UpdateFichaDto } from './dtos';
 import { FichaService } from './ficha.service';
 
+@ApiTags('Fichas')
 @Controller('ficha')
 export class FichaController {
 
     constructor(private readonly fichaService: FichaService) {}
 
     @Get()
-    getFichas() {
-        return this.fichaService.getFichas();
+    async getFichas() {
+        const fichas = await this.fichaService.getFichas();
+        return {
+            message: 'Petición correcta',
+            data: fichas //Podriamos poner "fichas" solo
+        }
     }
 
     @Get(':id')
