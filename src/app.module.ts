@@ -5,6 +5,7 @@ import { FichaModule } from './ficha/ficha.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 import * as constants from './config/constants';
 
 @Module({
@@ -28,7 +29,8 @@ import * as constants from './config/constants';
       envFilePath: '.env'
     }),
     FichaModule,
-    UsersModule
+    UsersModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -5,6 +5,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities';
 
+export interface UserGetByEmail {
+  id?: number;
+  email?: string;
+}
+
 @Injectable()
 export class UsersService {
 
@@ -32,6 +37,14 @@ export class UsersService {
     const user = await this.userRepository.findOne(id);
     if(!user) throw new NotFoundException('User does not exists');
     return user;
+  }
+
+  async getByEmail(data: UserGetByEmail) {
+    return await this.userRepository
+      .createQueryBuilder('user')
+      .where(data) //Como son iguales se podria dejar solo email
+      .addSelect('user.password')
+      .getOne();
   }
 
   async updateOne(id: number, dto: UpdateUserDto) {
