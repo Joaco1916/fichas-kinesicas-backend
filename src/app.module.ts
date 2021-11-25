@@ -7,6 +7,8 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthModule } from './auth/auth.module';
 import * as constants from './config/constants';
+import { AccessControlModule } from 'nest-access-control';
+import { roles } from './app.roles';
 
 @Module({
   imports: [
@@ -28,6 +30,7 @@ import * as constants from './config/constants';
       isGlobal: true,
       envFilePath: '.env'
     }),
+    AccessControlModule.forRoles(roles),
     FichaModule,
     UsersModule,
     AuthModule

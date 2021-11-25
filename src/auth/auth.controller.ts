@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/common/decorators';
+import { User, Auth } from 'src/common/decorators';
 import { User as UserEntity } from 'src/users/entities';
 import { AuthService } from './auth.service';
+import { LoginDto } from './dtos/login.dto';
 import { LocalAuthGuard, JwtAuthGuard } from './guards';
 
 @ApiTags('Authentication')
@@ -17,6 +18,7 @@ export class AuthController {
     @UseGuards(LocalAuthGuard)
     @Post('login')
     login(
+        @Body() loginDto: LoginDto,
         @User() user: UserEntity
     ){
         const data = this.authService.login(user);
@@ -26,8 +28,7 @@ export class AuthController {
         }
     }
 
-    @UseGuards(JwtAuthGuard)
-    @ApiBearerAuth()
+    @Auth()
     @Get('profile')
     profile(
         @User() user: UserEntity
@@ -38,7 +39,7 @@ export class AuthController {
         }
     }
 
-    @UseGuards(JwtAuthGuard)
+    @Auth()
     @Get('refresh')
     refreshToken(
         @User() user: UserEntity

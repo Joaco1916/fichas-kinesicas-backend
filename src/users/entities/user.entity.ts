@@ -19,14 +19,17 @@ export class User {
     @Column({ type: 'varchar', length: 128, nullable: false, select: false})
     password: string;
 
+    @Column({ type: 'simple-array'})
+    roles: string[]
+
     @Column({ type: 'bool', default: true})
     status: boolean;
 
     @CreateDateColumn({ name: 'created_at', type: 'timestamp'})
     createdAt: Date;
 
-    /*@OneToMany( _ => Ficha, ficha => ficha.author, { cascade: true } )
-    fichas: Ficha;*/
+    @OneToMany( _ => Ficha, ficha => ficha.author, { cascade: true } )
+    fichas: Ficha;
 
     @BeforeInsert()
     @BeforeUpdate()

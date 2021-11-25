@@ -33,9 +33,10 @@ export class UsersService {
     return await this.userRepository.find();
   }
 
-  async getOne(id: number) {
-    const user = await this.userRepository.findOne(id);
-    if(!user) throw new NotFoundException('User does not exists');
+  async getOne(id: number, userEntity?: User) {
+    const user = await this.userRepository.findOne(id)
+      .then( userFinded => !userEntity ? userFinded : !!userFinded && userEntity.id === userFinded.id ? userFinded : null)
+    if(!user) throw new NotFoundException('User does not exists or is unauthorized');
     return user;
   }
 
@@ -47,13 +48,11 @@ export class UsersService {
       .getOne();
   }
 
-  async updateOne(id: number, dto: UpdateUserDto) {
-    /*
-    const user = await this.userRepository.findOne(id);
-    if(!user) throw new NotFoundException('User does not exists');
-    */
+  async updateOne(id: number, dto: UpdateUserDto, userEntity?: User) {
+    //Si userEntity es null entonces es el admin
+    //Sino es el mismo usuario dueño (own)
 
-    const user = await this.getOne(id);
+    const user = await this.getOne(id, userEntity);
     const editedUser = Object.assign(user, dto);
 
     const finalUser = await this.userRepository.save(editedUser);
@@ -62,8 +61,8 @@ export class UsersService {
     return finalUser;
   }
 
-  async deleteOne(id: number) {
-    const user = await this.getOne(id);
+  async deleteOne(id: number, userEntity?: User) {
+    const user = await this.getOne(id, userEntity);
     return await this.userRepository.remove(user);
   }
 }
