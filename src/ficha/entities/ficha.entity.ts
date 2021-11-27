@@ -1,5 +1,5 @@
 import { User } from "src/users/entities";
-import { CreateDateColumn, Entity, Column,PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
+import { CreateDateColumn, Entity, Column,PrimaryGeneratedColumn, ManyToOne, JoinColumn, UpdateDateColumn } from "typeorm";
 
 @Entity('fichas')
 export class Ficha {
@@ -39,8 +39,11 @@ export class Ficha {
     @Column({ type: 'varchar', nullable: true })
     observaciones: string;
 
-    @CreateDateColumn({ type: 'timestamp'})
+    @CreateDateColumn({ name: 'created_at', type: 'timestamp'})
     createdAt: Date;
+
+    @UpdateDateColumn({ name: 'updated_at', type: 'timestamp'})
+    updatedAt: Date;
 
     @ManyToOne(_ => User, (user) => user.fichas, { eager: true})
     @JoinColumn({ name: 'author' })

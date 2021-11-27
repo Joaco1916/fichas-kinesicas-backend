@@ -3,8 +3,8 @@ import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { initSwagger } from './app.swagger';
-import * as constants from './config/constants'
-import { setDefaultUser } from './config/default-user';
+import * as constants from './config/constants';
+import { generateTypeormConfigFile, setDefaultUser } from './scripts';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -14,6 +14,7 @@ async function bootstrap() {
 
   initSwagger(app);
   setDefaultUser(config);
+  generateTypeormConfigFile(config);
 
   app.useGlobalPipes(
     new ValidationPipe({
