@@ -10,7 +10,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const logger = new Logger();
   const config = app.get(ConfigService);
-  const port = parseInt(config.get<string>(constants.SERVER_PORT), 10);
+  const port = parseInt(config.get<string>(constants.SERVER_PORT), 10) || 3000;
 
   initSwagger(app);
   setDefaultUser(config);
