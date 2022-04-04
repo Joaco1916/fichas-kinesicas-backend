@@ -9,7 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import * as constants from './config/constants';
 import { AccessControlModule } from 'nest-access-control';
 import { roles } from './app.roles';
-//import Joi from 'joi';
+import { PacienteModule } from './paciente/paciente.module';
 import databaseConfig from './config/database.config';
 
 @Module({
@@ -22,17 +22,13 @@ import databaseConfig from './config/database.config';
     ConfigModule.forRoot({
       isGlobal: true,
       load: [databaseConfig],
-      envFilePath: '.env',
-      //validationSchema: Joi.object({
-      //  NODE_ENV: Joi.string()
-      //    .valid('development', 'production')
-      //    .default('development')
-      //}),
+      envFilePath: '.env'
     }),
     AccessControlModule.forRoles(roles),
     FichaModule,
     UsersModule,
-    AuthModule
+    AuthModule,
+    PacienteModule
   ],
   controllers: [AppController],
   providers: [AppService],

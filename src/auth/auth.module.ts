@@ -18,7 +18,7 @@ import * as constants from '../config/constants';
       useFactory: (config: ConfigService) => ({
         secret: config.get<string>(constants.JWT_SECRET),
         signOptions: {
-          expiresIn: '60m'
+          //expiresIn: '60m'
         }
       })
     }),

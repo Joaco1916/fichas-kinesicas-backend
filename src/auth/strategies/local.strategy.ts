@@ -15,8 +15,9 @@ export class LocalStrategy extends PassportStrategy(Strategy){
     }
 
     async validate( email: string, password: string) {
+        if( email == '' || password == '' ) throw new UnauthorizedException('El email o la contraseña no fue completado');
         const user = await this.authService.validateUser(email, password);
-        if(!user) throw new UnauthorizedException('Login user or password does not match');
+        if(!user) throw new UnauthorizedException('El email y la contraseña no son válidos.');
         return user;
     }
 }
