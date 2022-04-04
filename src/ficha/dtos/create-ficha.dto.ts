@@ -1,7 +1,27 @@
-import { IsString } from "class-validator";
+import { IsBoolean, IsNumber, IsString } from "class-validator";
 
 export class CreateFichaDto {
     
+    //Datos personales
+    @IsString()
+    ocupacion: string;
+
+    @IsNumber()
+    edad: number;
+
+    @IsBoolean()
+    marcapasos: boolean;
+
+    @IsBoolean()
+    audifonos: boolean;
+
+    @IsBoolean()
+    embarazo: boolean;
+
+    @IsBoolean()
+    protesis: boolean;
+
+    //Motivo de consulta
     @IsString()
     diagnostico: string;
     
@@ -14,6 +34,7 @@ export class CreateFichaDto {
     @IsString()
     antecedentes: string;
 
+    //Dolor
     @IsString()
     mecanismo_de_lesion: string;
     
