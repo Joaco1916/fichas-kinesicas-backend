@@ -1,5 +1,6 @@
 import { hash } from "bcrypt";
 import { Ficha } from "src/ficha/entities/ficha.entity";
+import { Paciente } from "src/paciente/entities/paciente.entity";
 import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
@@ -28,8 +29,11 @@ export class User {
     @CreateDateColumn({ name: 'created_at', type: 'timestamp'})
     createdAt: Date;
 
-    @OneToMany( _ => Ficha, ficha => ficha.author, { cascade: true } )
-    fichas: Ficha;
+    //@OneToMany( _ => Ficha, ficha => ficha.author, { cascade: true } )
+    //fichas: Ficha;
+
+    @OneToMany( _ => Paciente, paciente => paciente.author, { cascade: true } )
+    pacientes: Paciente;
 
     @BeforeInsert()
     @BeforeUpdate()

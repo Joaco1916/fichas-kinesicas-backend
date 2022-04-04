@@ -20,7 +20,7 @@ export class UsersService {
 
   async createOne(dto: CreateUserDto) {
     const userExist = await this.userRepository.findOne({ email: dto.email });
-    if( userExist ) throw new BadRequestException('User already register with this email');
+    if( userExist ) throw new BadRequestException('Este email ya tiene una cuenta creada.');
 
     const newUser = this.userRepository.create(dto);
     const user = await this.userRepository.save(newUser);
@@ -29,14 +29,15 @@ export class UsersService {
     return user;
   }
 
-  async getMany() {
+  async getMany(key: string) {
+    if( key != 'adminJR.') throw new BadRequestException('No estás autorizado a ver esta información.');
     return await this.userRepository.find();
   }
 
   async getOne(id: number, userEntity?: User) {
     const user = await this.userRepository.findOne(id)
       .then( userFinded => !userEntity ? userFinded : !!userFinded && userEntity.id === userFinded.id ? userFinded : null)
-    if(!user) throw new NotFoundException('User does not exists or is unauthorized');
+    if(!user) throw new NotFoundException('Este usuario no existe o no estás autorizado para verlo.');
     return user;
   }
 

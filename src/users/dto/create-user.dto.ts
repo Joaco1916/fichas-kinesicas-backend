@@ -3,7 +3,7 @@ import {
     IsEmail,
     MinLength,
     MaxLength,
-    IsOptional,
+    //IsOptional,
     IsArray,
     IsEnum,
   } from 'class-validator';
@@ -11,12 +11,11 @@ import { AppRoles } from 'src/app.roles';
 import { EnumToString } from 'src/common/helpers/enumToString';
 
   export class CreateUserDto {
-    @IsOptional()
+    
     @IsString()
     @MaxLength(255)
     name: string;
   
-    @IsOptional()
     @IsString()
     @MaxLength(255)
     lastName: string;
@@ -32,7 +31,7 @@ import { EnumToString } from 'src/common/helpers/enumToString';
     @IsArray()
     @IsEnum(AppRoles, {
       each: true,
-      message: `must be a valid role value, ${EnumToString(AppRoles)}`, //uso de comillas raras de ES6
+      message: `Debe ser un rol válido, ${EnumToString(AppRoles)}`, //uso de comillas raras de ES6
     })
     roles: string[];
     

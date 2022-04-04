@@ -16,7 +16,7 @@ export class UsersController {
     private readonly rolesBuilder: RolesBuilder
   ) {}
 
-  @Auth({
+  /*@Auth({
     possession: 'any',
     action: 'create',
     resource: AppResource.USER
@@ -30,7 +30,7 @@ export class UsersController {
       message: 'User created',
       data
     }
-  }
+  }*/
 
   @Post('register')
   async publicRegistration(
@@ -41,24 +41,39 @@ export class UsersController {
     });
 
     return {
-      message: 'User registered',
+      message: 'Usuario registrado exitosamente.',
       data
     }
   }
 
-  @Get()
-  async getMany() {
-    const data = await this.usersService.getMany();
+  @Auth({
+    possession: 'own',
+    action: 'read',
+    resource: AppResource.USER
+  })
+  @Get(':key')
+  async getMany(
+    @Param('key') key: string
+  ) {
+    const data = await this.usersService.getMany(key);
     return {
       data
     }
   }
 
-  @Get(':id')
+  @Auth({
+    possession: 'own',
+    action: 'read',
+    resource: AppResource.USER
+  })
+  @Get(
+    //':id'
+  )
   async getOne(
-    @Param('id') id: number
+    //@Param('id') id: number,
+    @User() user: UserEntity
   ) {
-    return await this.usersService.getOne(id);
+    return await this.usersService.getOne(user.id);
   }
 
   @Auth({
@@ -66,9 +81,11 @@ export class UsersController {
     action: 'update',
     resource: AppResource.USER
   })
-  @Put(':id')
+  @Put(
+    //':id'
+  )
   async updateOne(
-    @Param('id') id: number, 
+    //@Param('id') id: number, 
     @Body() updateUserDto: UpdateUserDto,
     @User() user: UserEntity
   ) {
@@ -80,15 +97,15 @@ export class UsersController {
         .granted
     ) {
       //Logica de admin
-      data = await this.usersService.updateOne(id, updateUserDto);
+      data = await this.usersService.updateOne(user.id, updateUserDto);
     } else {
       //Logica de user normal
       const { roles, ...rest } = updateUserDto;
-      data = await this.usersService.updateOne(id, rest, user);
+      data = await this.usersService.updateOne(user.id, rest, user);
     }
 
     return {
-      message: 'User edited successfully',
+      message: 'Usuario editado exitosamente',
       data
     }
   }
@@ -98,9 +115,11 @@ export class UsersController {
     action: 'delete',
     resource: AppResource.USER
   })
-  @Delete(':id')
+  @Delete(
+    //':id'
+  )
   async deleteOne(
-    @Param('id') id: number,
+    //@Param('id') id: number,
     @User() user: UserEntity
   ) {
     let data;
@@ -111,14 +130,14 @@ export class UsersController {
         .granted
     ) {
       //Logica de admin
-      data = await this.usersService.deleteOne(id);
+      data = await this.usersService.deleteOne(user.id);
     } else {
       //Logica de user normal
-      data = await this.usersService.deleteOne(id, user);
+      data = await this.usersService.deleteOne(user.id, user);
     }
     
     return {
-      message: 'User deleted successfully',
+      message: 'Usuario eliminado exitosamente',
       data
     }
   }
