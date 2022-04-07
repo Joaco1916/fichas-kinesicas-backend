@@ -17,15 +17,6 @@ export class PacienteController {
     private readonly rolesBuilder: RolesBuilder
   ) {}
 
-  /*
-  @Post()
-  create(
-    @Body() createPacienteDto: CreatePacienteDto
-  ) {
-    return this.pacienteService.create(createPacienteDto);
-  }
-  */
-
   @Auth({
     possession: 'own',
     action: 'read',
@@ -33,7 +24,6 @@ export class PacienteController {
   })
   @Get()
   async getPacientes(
-    //@Param('key') key: string
     @User() author: UserEntity
   ) {
       const data = await this.pacienteService.getPacientes(author);
@@ -42,7 +32,6 @@ export class PacienteController {
       } ).filter((paciente) => {
         return paciente != null
       } );
-      //console.log(pacientes)
       return { pacientes };
   }
 
@@ -103,7 +92,6 @@ export class PacienteController {
           message: 'Paciente edited',
           data
       };
-      //return this.pacienteService.editPaciente(id, dto);
   }
 
   @Auth({
@@ -132,28 +120,4 @@ export class PacienteController {
           data
       };
   }
-
-  /*
-  @Get(':id')
-  findOne(
-    @Param('id') id: string
-  ) {
-    return this.pacienteService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string, 
-    @Body() updatePacienteDto: UpdatePacienteDto
-  ) {
-    return this.pacienteService.update(+id, updatePacienteDto);
-  }
-
-  @Delete(':id')
-  remove(
-    @Param('id') id: string
-  ) {
-    return this.pacienteService.remove(+id);
-  }
-  */
 }

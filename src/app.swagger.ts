@@ -6,7 +6,7 @@ export const initSwagger = (app: INestApplication) => {
         .setTitle('Fichas kinesicas API')
         .addBearerAuth()
         .setDescription(
-            'Esta API se creo con NestJS para mi proyecto final de IAW'
+            'Esta API se creo con NestJS para mi proyecto final de IAW - Joaquín Rodriguez (LU:108641)'
         )
         .build();
     const document = SwaggerModule.createDocument(app, swaggerConfig);

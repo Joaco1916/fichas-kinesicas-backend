@@ -35,7 +35,6 @@ export class FichaController {
           } ).filter((ficha) => {
             return ficha != null
           } );
-          //console.log(pacientes)
         return { fichas };
     }
 
@@ -60,7 +59,6 @@ export class FichaController {
     @Post(':id')
     async createFicha(
         @Body() dto: CreateFichaDto,
-        //@User() author: PacienteEntity,
         @Param('id', ParseIntPipe) id: number
     ){
         const author = await this.pacienteService.getPaciente(id);
@@ -83,22 +81,11 @@ export class FichaController {
         @Body() dto: UpdateFichaDto,
         @User() author: PacienteEntity
     ){
-        let data;
-
-        /*if(this.rolesBuilder
-            .can(author.roles)
-            .deleteAny(AppResource.FICHA)
-            .granted
-        ){
-            data = await this.fichaService.editFicha(id, dto);
-        } else {*/
-            data = await this.fichaService.editFicha(id, dto, author);
-        //}
+        let data = await this.fichaService.editFicha(id, dto, author);
         return {
             message: 'Ficha edited',
             data
         };
-        //return this.fichaService.editFicha(id, dto);
     }
 
     @Auth({
@@ -111,17 +98,7 @@ export class FichaController {
         @Param('id', ParseIntPipe) id: number,
         @User() author: PacienteEntity
     ){
-        let data;
-
-        /*if(this.rolesBuilder
-            .can(author.roles)
-            .deleteAny(AppResource.FICHA)
-            .granted
-        ){
-            data = await this.fichaService.deleteFicha(id);
-        } else {*/
-            data = await this.fichaService.deleteFicha(id, author);
-        //}
+        let data = await this.fichaService.deleteFicha(id, author);
         return {
             message: 'Ficha deleted',
             data

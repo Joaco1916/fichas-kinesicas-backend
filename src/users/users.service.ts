@@ -44,15 +44,12 @@ export class UsersService {
   async getByEmail(data: UserGetByEmail) {
     return await this.userRepository
       .createQueryBuilder('user')
-      .where(data) //Como son iguales se podria dejar solo email
+      .where(data)
       .addSelect('user.password')
       .getOne();
   }
 
   async updateOne(id: number, dto: UpdateUserDto, userEntity?: User) {
-    //Si userEntity es null entonces es el admin
-    //Sino es el mismo usuario dueño (own)
-
     const user = await this.getOne(id, userEntity);
     const editedUser = Object.assign(user, dto);
 

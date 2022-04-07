@@ -13,22 +13,11 @@ export class PacienteService {
   ){}
 
   async getPacientes(author?: User){
-    //if( key != 'adminJR.') throw new BadRequestException('You are not allow to access this data.');
     return await this.pacienteRepository.find()
-    //const pacientes = await this.pacienteRepository.find();
-    //  .then( pacientesFinded => pacientesFinded.forEach(paciente => {
-    //    return paciente.author.id == author.id ? paciente : null;
-    //  }) );
-    //return pacientes;
   }
 
   async getPaciente(id: number, author?: User){
-    console.log('the ID', id);
-    console.log('the author',author);
     const paciente = await this.pacienteRepository.findOne(id);
-    console.log('the paciente',paciente);
-        //.then(pacienteFinded => !author ? pacienteFinded : !!pacienteFinded && author.id === pacienteFinded.author.id ? pacienteFinded : null);
-    //if(!paciente) throw new NotFoundException('Paciente does not exist');
     return paciente;
   }
 
@@ -38,7 +27,6 @@ export class PacienteService {
   }
 
   async editPaciente(id: number, dto: UpdatePacienteDto, author?: User){
-    //const ficha = await this.fichaRepository.findOne(id);
     const paciente = await this.getPaciente(id, author);
     if(!paciente) throw new NotFoundException('Paciente does not exist');
     const editedPaciente = Object.assign(paciente, dto);

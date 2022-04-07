@@ -3,7 +3,6 @@ import {
     IsEmail,
     MinLength,
     MaxLength,
-    //IsOptional,
     IsArray,
     IsEnum,
   } from 'class-validator';
@@ -31,7 +30,7 @@ import { EnumToString } from 'src/common/helpers/enumToString';
     @IsArray()
     @IsEnum(AppRoles, {
       each: true,
-      message: `Debe ser un rol válido, ${EnumToString(AppRoles)}`, //uso de comillas raras de ES6
+      message: `Debe ser un rol válido, ${EnumToString(AppRoles)}`,
     })
     roles: string[];
     

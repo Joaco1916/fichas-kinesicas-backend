@@ -31,15 +31,15 @@ export class FichaService {
     }
 
     async editFicha(id: number, dto: UpdateFichaDto, author?: Paciente){
-        //const ficha = await this.fichaRepository.findOne(id);
-        const ficha = await this.getFicha(id, author);
+        const ficha = await this.fichaRepository.findOne(id);
         if(!ficha) throw new NotFoundException('Esta ficha no existe.');
         const editedFicha = Object.assign(ficha, dto);
         return await this.fichaRepository.save(editedFicha);
     }
 
     async deleteFicha(id: number, author?: Paciente){
-        const ficha = await this.getFicha(id, author);
+        const ficha = await this.fichaRepository.findOne(id);
+        if(!ficha) throw new NotFoundException('Esta ficha no existe.');
         return await this.fichaRepository.remove(ficha);
     }
 }

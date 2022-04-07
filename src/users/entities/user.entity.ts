@@ -29,9 +29,6 @@ export class User {
     @CreateDateColumn({ name: 'created_at', type: 'timestamp'})
     createdAt: Date;
 
-    //@OneToMany( _ => Ficha, ficha => ficha.author, { cascade: true } )
-    //fichas: Ficha;
-
     @OneToMany( _ => Paciente, paciente => paciente.author, { cascade: true } )
     pacientes: Paciente;
 

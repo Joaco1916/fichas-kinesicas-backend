@@ -2,7 +2,7 @@ import { RolesBuilder } from "nest-access-control";
 
 export enum AppRoles {
     //PACIENTE = 'PACIENTE'
-    AUTHOR = 'AUTHOR', //El kinesiolo
+    AUTHOR = 'AUTHOR', //El kinesiologo
     ADMIN = 'ADMIN'
 }
 

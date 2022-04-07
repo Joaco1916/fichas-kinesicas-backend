@@ -16,22 +16,6 @@ export class UsersController {
     private readonly rolesBuilder: RolesBuilder
   ) {}
 
-  /*@Auth({
-    possession: 'any',
-    action: 'create',
-    resource: AppResource.USER
-  })
-  @Post()
-  async createOne(
-    @Body() createUserDto: CreateUserDto
-  ) {
-    const data = await this.usersService.createOne(createUserDto);
-    return { 
-      message: 'User created',
-      data
-    }
-  }*/
-
   @Post('register')
   async publicRegistration(
     @Body() userRegistrationDto: UserRegistrationDto
@@ -66,11 +50,8 @@ export class UsersController {
     action: 'read',
     resource: AppResource.USER
   })
-  @Get(
-    //':id'
-  )
+  @Get()
   async getOne(
-    //@Param('id') id: number,
     @User() user: UserEntity
   ) {
     return await this.usersService.getOne(user.id);
@@ -81,11 +62,8 @@ export class UsersController {
     action: 'update',
     resource: AppResource.USER
   })
-  @Put(
-    //':id'
-  )
+  @Put()
   async updateOne(
-    //@Param('id') id: number, 
     @Body() updateUserDto: UpdateUserDto,
     @User() user: UserEntity
   ) {
@@ -115,11 +93,8 @@ export class UsersController {
     action: 'delete',
     resource: AppResource.USER
   })
-  @Delete(
-    //':id'
-  )
+  @Delete()
   async deleteOne(
-    //@Param('id') id: number,
     @User() user: UserEntity
   ) {
     let data;
